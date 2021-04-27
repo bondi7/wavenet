@@ -2,3 +2,6 @@ logdir/
 VCTK-Corpus/
 *.pyc
 
+/venv-3.6
+/VCTK-Corpus-0.92
+/.idea

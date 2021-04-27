@@ -7,8 +7,11 @@ import threading
 import librosa
 import numpy as np
 import tensorflow as tf
+# import tensorflow.compat.v1 as tf
+# tf.disable_v2_behavior()
 
-FILE_PATTERN = r'p([0-9]+)_([0-9]+)\.wav'
+#FILE_PATTERN = r'p([0-9]+)_([0-9]+)\.wav'
+FILE_PATTERN = r'p([0-9]+)_([0-9]+)\.flac'
 
 
 def get_category_cardinality(files):
@@ -32,7 +35,7 @@ def randomize_files(files):
         yield files[file_index]
 
 
-def find_files(directory, pattern='*.wav'):
+def find_files(directory, pattern='*.flac'):
     '''Recursively finds all files matching the pattern.'''
     files = []
     for root, dirnames, filenames in os.walk(directory):
@@ -65,7 +68,7 @@ def trim_silence(audio, threshold, frame_length=2048):
     '''Removes silence at the beginning and end of a sample.'''
     if audio.size < frame_length:
         frame_length = audio.size
-    energy = librosa.feature.rmse(audio, frame_length=frame_length)
+    energy = librosa.feature.rms(audio, frame_length=frame_length)
     frames = np.nonzero(energy > threshold)
     indices = librosa.core.frames_to_samples(frames)[1]
 
@@ -122,7 +125,7 @@ class AudioReader(object):
         # the execution of the script, so we do it in the constructor for now.
         files = find_files(audio_dir)
         if not files:
-            raise ValueError("No audio files found in '{}'.".format(audio_dir))
+            raise ValueError("No audio files found in {}.".format(audio_dir))
         if self.gc_enabled and not_all_have_id(files):
             raise ValueError("Global conditioning is enabled, but file names "
                              "do not conform to pattern having id.")

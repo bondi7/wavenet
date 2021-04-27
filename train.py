@@ -15,12 +15,14 @@ import sys
 import time
 
 import tensorflow as tf
+# import tensorflow.compat.v1 as tf
+# tf.disable_v2_behavior()
 from tensorflow.python.client import timeline
 
 from wavenet import WaveNetModel, AudioReader, optimizer_factory
 
 BATCH_SIZE = 1
-DATA_DIRECTORY = './VCTK-Corpus'
+DATA_DIRECTORY = 'VCTK-Corpus-0.92/'
 LOGDIR_ROOT = './logdir'
 CHECKPOINT_EVERY = 50
 NUM_STEPS = int(1e5)
@@ -29,7 +31,7 @@ WAVENET_PARAMS = './wavenet_params.json'
 STARTED_DATESTRING = "{0:%Y-%m-%dT%H-%M-%S}".format(datetime.now())
 SAMPLE_SIZE = 100000
 L2_REGULARIZATION_STRENGTH = 0
-SILENCE_THRESHOLD = 0.3
+SILENCE_THRESHOLD = 0.03
 EPSILON = 0.001
 MOMENTUM = 0.9
 MAX_TO_KEEP = 5
