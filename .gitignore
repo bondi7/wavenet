@@ -5,3 +5,5 @@ VCTK-Corpus/
 /venv-3.6
 /VCTK-Corpus-0.92
 /.idea
+/.DS_Store
+/wavenet/.DS_Store
